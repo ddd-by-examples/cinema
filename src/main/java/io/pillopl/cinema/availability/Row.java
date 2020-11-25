@@ -61,12 +61,14 @@ class Seat {
         if (row <= 0) {
             throw new IllegalStateException("Negative number of a row: " + number);
         }
-        return new Seat(availability);
+        return new Seat(row + String.valueOf(number), availability);
     }
 
+    private final String seatNumber;
     private final boolean available;
 
-    private Seat(boolean available) {
+    private Seat(String number, boolean available) {
+        this.seatNumber = number;
         this.available = available;
     }
 
