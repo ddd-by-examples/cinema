@@ -1,6 +1,6 @@
 package io.pillopl.cinema.reservation;
 
-import io.pillopl.cinema.availability.Show;
+import io.pillopl.cinema.availability.Hall;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -16,7 +16,7 @@ class ReservationWithoutSingleFreeSeatLeftRuleTest {
     @Test
     void reservationThatLeavesOneSingleFreeSeatShouldNotBePossible() {
         //given
-        Show batman = new Show(of(
+        Hall batman = new Hall(of(
                 'A', "X--X----",
                 'B', "--------",
                 'C', "XXXXXXXX",
@@ -37,7 +37,7 @@ class ReservationWithoutSingleFreeSeatLeftRuleTest {
     @Test
     void reservationThatDoesNotLeaveOneSingleFreeSeatShouldBePossible() {
         //given
-        Show batman = new Show(of(
+        Hall batman = new Hall(of(
                 'A', "X--X----",
                 'B', "--------",
                 'C', "XXXXXXXX",
@@ -56,7 +56,7 @@ class ReservationWithoutSingleFreeSeatLeftRuleTest {
     @Test
     void reservationOfNotAvailableSeatsShouldNotBePossible() {
         //given
-        Show batman = new Show(of(
+        Hall batman = new Hall(of(
                 'A', "X-------",
                 'B', "--------",
                 'C', "XXXXXXXX",
@@ -67,8 +67,8 @@ class ReservationWithoutSingleFreeSeatLeftRuleTest {
         assertThat(reservationOf(batman, "B1","B2","B3","C1").isSuccessful()).isFalse();
     }
 
-    ReservationResult reservationOf(Show batman, String ... seats) {
-        return new ReservationRequest(seats(seats), batman).reserve(new DontLeaveSingleFreeSeat());
+    ReservationResult reservationOf(Hall batman, String ... seats) {
+        return new ReservationRequest(seats(seats), batman).reserve(new DontLeaveSingleEmptySeat());
     }
 
     Set<SeatRequest> seats(String ... requests) {

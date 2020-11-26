@@ -1,37 +1,37 @@
 package io.pillopl.cinema.reservation;
 
-import io.pillopl.cinema.availability.Show;
+import io.pillopl.cinema.availability.Hall;
 
 import java.util.Objects;
 import java.util.Set;
 
-import static io.pillopl.cinema.reservation.ReservationResult.reservationThatFailed;
+import static io.pillopl.cinema.reservation.ReservationResult.failedReservation;
 
 class ReservationRequest {
 
     private final Set<SeatRequest> wantedSeats;
-    private final Show show;
+    private final Hall show;
 
-    ReservationRequest(Set<SeatRequest> wantedSeats, Show show) {
+    ReservationRequest(Set<SeatRequest> wantedSeats, Hall show) {
         this.wantedSeats = wantedSeats;
         this.show = show;
     }
 
     ReservationResult reserve() {
-        return reserve(new NoRule());
+        return reserve(new NoPolicy());
     }
 
-    ReservationResult reserve(ReservationRule rule) {
+    ReservationResult reserve(ReservationPolicy rule) {
         if (anySeatNotAvailable()) {
-            return reservationThatFailed();
+            return failedReservation();
         }
-        return rule.validate(show, wantedSeats);
+        return rule.check(show, wantedSeats);
     }
 
     private boolean anySeatNotAvailable() {
         return wantedSeats
                 .stream()
-                .anyMatch(seat -> !show.isRequestedSeatAvailable(seat.row, seat.seat));
+                .anyMatch(seat -> !show.isSeatAvailable(seat.row, seat.seat));
     }
 
 }

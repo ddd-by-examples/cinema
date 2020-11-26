@@ -7,18 +7,18 @@ import java.util.Map.Entry;
 
 import static java.util.stream.Collectors.toMap;
 
-public class Show {
+public class Hall {
 
     private final Map<Character, Row> rows;
 
-    public Show(Map<Character, String> availability) {
+    public Hall(Map<Character, String> availability) {
         this.rows = availability
                 .entrySet()
                 .stream()
-                .collect(toMap(Entry::getKey, entry -> Row.of(entry.getKey(), entry.getValue())));
+                .collect(toMap(Entry::getKey, entry -> Row.of(entry.getValue())));
     }
 
-    public boolean isRequestedSeatAvailable(Character row, int seatNumber) {
+    public boolean isSeatAvailable(Character row, int seatNumber) {
         if (rowDoesNotExists(row)) {
             return false;
         }

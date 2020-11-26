@@ -9,15 +9,19 @@ class ReservationResult {
 
     private final Set<SeatRequest> requiredToComplete;
 
-    static ReservationResult reservationThatCanBePossibleWith(Set<SeatRequest> additionalSeats) {
+    static ReservationResult reservationCanBePossibleWith(SeatRequest seat) {
+        return reservationCanBePossibleWith(Set.of(seat));
+    }
+
+    static ReservationResult reservationCanBePossibleWith(Set<SeatRequest> additionalSeats) {
         return new ReservationResult(true, additionalSeats);
     }
 
-    static ReservationResult reservationThatIsSuccesful() {
+    static ReservationResult successfulReservation() {
         return new ReservationResult(true, new HashSet<>());
     }
 
-    static ReservationResult reservationThatFailed() {
+    static ReservationResult failedReservation() {
         return new ReservationResult(false, new HashSet<>());
     }
 

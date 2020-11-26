@@ -1,6 +1,6 @@
 package io.pillopl.cinema.reservation;
 
-import io.pillopl.cinema.availability.Show;
+import io.pillopl.cinema.availability.Hall;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -13,12 +13,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class ReservationWithSpecificRequiredSeatTest {
 
-    public static final ArtificialRuleWithRequiredSpecificSeat WITH_REQUIRED_A2_RULE = new ArtificialRuleWithRequiredSpecificSeat(new SeatRequest('A', 2));
+    public static final ArtificialPolicyWithRequiredSpecificSeat WITH_REQUIRED_A2_RULE = new ArtificialPolicyWithRequiredSpecificSeat(new SeatRequest('A', 2));
 
     @Test
     void reservationOfAvailableSeatsShouldBePossible() {
         //given
-        Show batman = new Show(of(
+        Hall batman = new Hall(of(
                 'A', "X-------",
                 'B', "--------",
                 'C', "XXXXXXXX",
@@ -26,8 +26,8 @@ class ReservationWithSpecificRequiredSeatTest {
 
         //expect
         assertThat(new ReservationRequest(seats("A2"), batman).reserve(WITH_REQUIRED_A2_RULE).isSuccessful()).isTrue();
-        assertThat(new ReservationRequest(seats("A2"), batman).reserve(WITH_REQUIRED_A2_RULE).isSuccessful()).isFalse();
-        assertThat(new ReservationRequest(seats("A2"), batman).reserve(WITH_REQUIRED_A2_RULE).getSeatsRequiredToReserve()).containsExactly(new SeatRequest('A', 2));
+        assertThat(new ReservationRequest(seats("A1"), batman).reserve(WITH_REQUIRED_A2_RULE).isSuccessful()).isFalse();
+        assertThat(new ReservationRequest(seats("A4"), batman).reserve(WITH_REQUIRED_A2_RULE).getSeatsRequiredToReserve()).containsExactly(new SeatRequest('A', 2));
 
     }
 
