@@ -1,6 +1,8 @@
 package io.pillopl.cinema.reservation;
 
-import io.pillopl.cinema.availability.Hall;
+import io.pillopl.cinema.show.Seat;
+import io.pillopl.cinema.show.SeatsCollection;
+import io.pillopl.cinema.show.Show;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -8,14 +10,15 @@ import java.util.stream.Collectors;
 
 import static io.pillopl.cinema.reservation.ReservationResult.reservationCanBePossibleWith;
 
-interface ReservationPolicy {
+interface ShowReservationRule {
 
-    ReservationResult check(Hall hall, SeatRequest wantedSeats);
+    ReservationResult checkReservation(Show show, Seat seat);
 
-    default ReservationResult check(Hall hall, Set<SeatRequest> wantedSeats) {
-        Set<SeatRequest> additionalSeats = wantedSeats
+    default ReservationResult checkReservation(Show availability, SeatsCollection wantedSeats) {
+        Set<Seat> additionalSeats = wantedSeats
+                .all()
                 .stream()
-                .map(seat -> check(hall, seat))
+                .map(seat -> checkReservation(availability, seat))
                 .map(ReservationResult::getSeatsRequiredToReserve)
                 .flatMap(Collection::stream)
                 .filter(seatRequest -> !wantedSeats.contains(seatRequest))

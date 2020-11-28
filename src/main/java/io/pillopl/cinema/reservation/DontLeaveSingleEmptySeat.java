@@ -1,6 +1,7 @@
 package io.pillopl.cinema.reservation;
 
-import io.pillopl.cinema.availability.Hall;
+import io.pillopl.cinema.show.Seat;
+import io.pillopl.cinema.show.Show;
 
 import java.util.Set;
 
@@ -9,41 +10,41 @@ import static io.pillopl.cinema.reservation.ReservationResult.successfulReservat
 import static java.util.stream.Collectors.*;
 import static java.util.stream.Stream.concat;
 
-class DontLeaveSingleEmptySeat implements ReservationPolicy {
+class DontLeaveSingleEmptySeat implements ShowReservationRule {
 
     private final NoSingleEmptySeatOnTheLeft noSingleEmptySeatOnTheLeft = new NoSingleEmptySeatOnTheLeft();
     private final NoSingleEmptySeatOnTheRight noSingleEmptySeatOnTheRight = new NoSingleEmptySeatOnTheRight();
 
     @Override
-    public ReservationResult check(Hall hall, SeatRequest wantedSeats) {
-        Set<SeatRequest> neededToTheLeft = noSingleEmptySeatOnTheLeft.check(hall, wantedSeats).getSeatsRequiredToReserve();
-        Set<SeatRequest> neededToTheRight = noSingleEmptySeatOnTheRight.check(hall, wantedSeats).getSeatsRequiredToReserve();
-        Set<SeatRequest> additionalNeededSeats = concat(neededToTheLeft.stream(), neededToTheRight.stream()).collect(toSet());
-        return ReservationResult.reservationCanBePossibleWith(additionalNeededSeats);
+    public ReservationResult checkReservation(Show show, Seat seat) {
+        Set<Seat> neededToTheLeft = noSingleEmptySeatOnTheLeft.checkReservation(show, seat).getSeatsRequiredToReserve();
+        Set<Seat> neededToTheRight = noSingleEmptySeatOnTheRight.checkReservation(show, seat).getSeatsRequiredToReserve();
+        Set<Seat> additionalNeededSeats = concat(neededToTheLeft.stream(), neededToTheRight.stream()).collect(toSet());
+        return reservationCanBePossibleWith(additionalNeededSeats);
     }
 
 }
 
-class NoSingleEmptySeatOnTheLeft implements ReservationPolicy {
+class NoSingleEmptySeatOnTheLeft implements ShowReservationRule {
 
     @Override
-    public ReservationResult check(Hall hall, SeatRequest wantedSeat) {
-        SeatRequest oneToTheLeft = wantedSeat.onTheLeft();
-        SeatRequest twoToTheLeft = oneToTheLeft.onTheLeft();
-        if (hall.isSeatAvailable(oneToTheLeft.row, oneToTheLeft.seat) && !hall.isSeatAvailable(twoToTheLeft.row, twoToTheLeft.seat)) {
+    public ReservationResult checkReservation(Show show, Seat seat) {
+        Seat oneToTheLeft = seat.onTheLeft();
+        Seat twoToTheLeft = oneToTheLeft.onTheLeft();
+        if (show.isSeatAvailable(oneToTheLeft) && !show.isSeatAvailable(twoToTheLeft)) {
             return reservationCanBePossibleWith(oneToTheLeft);
         }
         return successfulReservation();
     }
 }
 
-class NoSingleEmptySeatOnTheRight implements ReservationPolicy {
+class NoSingleEmptySeatOnTheRight implements ShowReservationRule {
 
     @Override
-    public ReservationResult check(Hall hall, SeatRequest wantedSeat) {
-        SeatRequest oneToTheRight = wantedSeat.onTheRight();
-        SeatRequest twoToTheRight = oneToTheRight.onTheRight();
-        if (hall.isSeatAvailable(oneToTheRight.row, oneToTheRight.seat) && !hall.isSeatAvailable(twoToTheRight.row, twoToTheRight.seat)) {
+    public ReservationResult checkReservation(Show show, Seat seat) {
+        Seat oneToTheRight = seat.onTheRight();
+        Seat twoToTheRight = oneToTheRight.onTheRight();
+        if (show.isSeatAvailable(oneToTheRight) && !show.isSeatAvailable(twoToTheRight)) {
             return reservationCanBePossibleWith(oneToTheRight);
         }
         return successfulReservation();

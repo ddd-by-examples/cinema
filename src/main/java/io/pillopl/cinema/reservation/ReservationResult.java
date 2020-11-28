@@ -1,5 +1,7 @@
 package io.pillopl.cinema.reservation;
 
+import io.pillopl.cinema.show.Seat;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -7,13 +9,13 @@ class ReservationResult {
 
     private final boolean possible;
 
-    private final Set<SeatRequest> requiredToComplete;
+    private final Set<Seat> requiredToComplete;
 
-    static ReservationResult reservationCanBePossibleWith(SeatRequest seat) {
+    static ReservationResult reservationCanBePossibleWith(Seat seat) {
         return reservationCanBePossibleWith(Set.of(seat));
     }
 
-    static ReservationResult reservationCanBePossibleWith(Set<SeatRequest> additionalSeats) {
+    static ReservationResult reservationCanBePossibleWith(Set<Seat> additionalSeats) {
         return new ReservationResult(true, additionalSeats);
     }
 
@@ -25,7 +27,7 @@ class ReservationResult {
         return new ReservationResult(false, new HashSet<>());
     }
 
-    private ReservationResult(boolean possible, Set<SeatRequest> requiredToComplete) {
+    private ReservationResult(boolean possible, Set<Seat> requiredToComplete) {
         this.possible = possible;
         this.requiredToComplete = requiredToComplete;
     }
@@ -34,7 +36,7 @@ class ReservationResult {
         return possible && requiredToComplete.isEmpty();
     }
 
-    Set<SeatRequest> getSeatsRequiredToReserve() {
+    Set<Seat> getSeatsRequiredToReserve() {
         return requiredToComplete;
     }
 }

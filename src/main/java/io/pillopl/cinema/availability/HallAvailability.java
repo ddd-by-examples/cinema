@@ -7,12 +7,12 @@ import java.util.Map.Entry;
 
 import static java.util.stream.Collectors.toMap;
 
-public class Hall {
+public class HallAvailability {
 
-    private final Map<Character, Row> rows;
+    private final Map<Character, Row> seats;
 
-    public Hall(Map<Character, String> availability) {
-        this.rows = availability
+    public HallAvailability(Map<Character, String> availability) {
+        this.seats = availability
                 .entrySet()
                 .stream()
                 .collect(toMap(Entry::getKey, entry -> Row.of(entry.getValue())));
@@ -22,11 +22,18 @@ public class Hall {
         if (rowDoesNotExists(row)) {
             return false;
         }
-        return rows.get(row).hasAvailabilityAt(seatNumber);
+        return seats.get(row).hasAvailabilityAt(seatNumber);
     }
 
     private boolean rowDoesNotExists(Character row) {
-        return !rows.containsKey(row);
+        return !seats.containsKey(row);
+    }
+
+    public Map<Character, String> print() {
+        return seats
+                .entrySet()
+                .stream()
+                .collect(toMap(Entry::getKey, entry -> entry.getValue().print()));
     }
 
 

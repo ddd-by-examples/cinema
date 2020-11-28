@@ -1,11 +1,9 @@
 package io.pillopl.cinema.reservation;
 
-import io.pillopl.cinema.availability.Hall;
+import io.pillopl.cinema.show.Seat;
+import io.pillopl.cinema.show.SeatsCollection;
+import io.pillopl.cinema.show.Show;
 import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import static java.util.Map.of;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -13,28 +11,26 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class ReservationWithSpecificRequiredSeatTest {
 
-    public static final ArtificialPolicyWithRequiredSpecificSeat WITH_REQUIRED_A2_RULE = new ArtificialPolicyWithRequiredSpecificSeat(new SeatRequest('A', 2));
+    static final ArtificialRuleWithRequiredSpecificSeat WITH_REQUIRED_A2_RULE = new ArtificialRuleWithRequiredSpecificSeat(new Seat('A', 2));
 
     @Test
     void reservationOfAvailableSeatsShouldBePossible() {
         //given
-        Hall batman = new Hall(of(
+        Show batman = new Show(of(
                 'A', "X-------",
                 'B', "--------",
                 'C', "XXXXXXXX",
                 'D', "XXXX--XX"));
 
         //expect
-        assertThat(new ReservationRequest(seats("A2"), batman).reserve(WITH_REQUIRED_A2_RULE).isSuccessful()).isTrue();
-        assertThat(new ReservationRequest(seats("A1"), batman).reserve(WITH_REQUIRED_A2_RULE).isSuccessful()).isFalse();
-        assertThat(new ReservationRequest(seats("A4"), batman).reserve(WITH_REQUIRED_A2_RULE).getSeatsRequiredToReserve()).containsExactly(new SeatRequest('A', 2));
-
+        assertThat(reservationFor(batman, "A2").isSuccessful()).isTrue();
+        assertThat(reservationFor(batman, "A3").isSuccessful()).isFalse();
+        assertThat(reservationFor(batman, "A3").getSeatsRequiredToReserve()).containsExactly(new Seat('A', 2));
     }
 
-    Set<SeatRequest> seats(String... requests) {
-        return Arrays.stream(requests)
-                .map(request -> new SeatRequest(request.charAt(0), Integer.parseInt(request.substring(1))))
-                .collect(Collectors.toSet());
+    ReservationResult reservationFor(Show show, String seats) {
+        return new ShowReservationBuilder().forShow(show).seats(SeatsCollection.seats(seats)).rule(WITH_REQUIRED_A2_RULE).reserve();
     }
+
 
 }
