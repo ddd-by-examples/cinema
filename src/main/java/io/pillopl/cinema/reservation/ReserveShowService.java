@@ -25,7 +25,7 @@ class ReserveShowService {
 
     ReservationResult reserve(int showId, SeatsCollection seats, ShowReservationRule additionalRule) {
         Show show = shows.load(showId);
-        ReservationResult result = reserveShowDomainService.reserve(show, seats, additionalRule);
+        ReservationResult result = reserveShowDomainService.canReserve(show, seats, additionalRule);
         if (result.isSuccessful()) {
             return checkIfAllSeatsStillAvailableAndMarkAsUnavailable(showId, seats);
         }

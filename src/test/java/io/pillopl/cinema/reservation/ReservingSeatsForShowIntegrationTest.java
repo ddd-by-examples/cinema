@@ -26,14 +26,14 @@ public class ReservingSeatsForShowIntegrationTest {
     @Test
     void shouldReserveAllSeatsWhenAllAvailable() {
         //given
-        int show = aShowWithAvailability(of(
+        int batman = aShowWithAvailability(of(
                 'A', "X-------",
                 'B', "--------",
                 'C', "XXXXXXXX",
                 'D', "XXXX--XX"));
 
         //when
-        ReservationResult result = reserveShowService.reserve(show, seats("B1", "B2"));
+        ReservationResult result = reserveShowService.reserve(batman, seats("B1", "B2"));
 
         //then
         assertThat(result.isSuccessful()).isTrue();
@@ -41,20 +41,20 @@ public class ReservingSeatsForShowIntegrationTest {
                 'A', "X-------",
                 'B', "XX------",
                 'C', "XXXXXXXX",
-                'D', "XXXX--XX"), shows.load(show).print());
+                'D', "XXXX--XX"), shows.load(batman).print());
     }
 
     @Test
     void shouldNotReserveAnythingWhenSomeSeatsAreNotAvailable() {
         //given
-        int show = aShowWithAvailability(of(
+        int batman = aShowWithAvailability(of(
                 'A', "X-------",
                 'B', "--------",
                 'C', "XXXXXXXX",
                 'D', "XXXX--XX"));
 
         //when
-        ReservationResult result = reserveShowService.reserve(show, seats("A1", "A2"));
+        ReservationResult result = reserveShowService.reserve(batman, seats("A1", "A2"));
 
         //then
         assertThat(result.isSuccessful()).isFalse();
@@ -62,20 +62,20 @@ public class ReservingSeatsForShowIntegrationTest {
                 'A', "X-------",
                 'B', "--------",
                 'C', "XXXXXXXX",
-                'D', "XXXX--XX"), shows.load(show).print());
+                'D', "XXXX--XX"), shows.load(batman).print());
     }
 
     @Test
     void shouldTakeIntoAccountAdditionalRules() {
         //given
-        int show = aShowWithAvailability(of(
+        int batman = aShowWithAvailability(of(
                 'A', "X--X----",
                 'B', "--------",
                 'C', "XXXXXXXX",
                 'D', "XXXX--XX"));
 
         //when
-        ReservationResult result = reserveShowService.reserve(show, seats("A2"), new DontLeaveSingleEmptySeat());
+        ReservationResult result = reserveShowService.reserve(batman, seats("A2"), new DontLeaveSingleEmptySeat());
 
         //then
         assertThat(result.isSuccessful()).isFalse();
@@ -84,7 +84,7 @@ public class ReservingSeatsForShowIntegrationTest {
                 'A', "X--X----",
                 'B', "--------",
                 'C', "XXXXXXXX",
-                'D', "XXXX--XX"), shows.load(show).print());
+                'D', "XXXX--XX"), shows.load(batman).print());
     }
 
     int aShowWithAvailability(Map<Character, String> availability) {

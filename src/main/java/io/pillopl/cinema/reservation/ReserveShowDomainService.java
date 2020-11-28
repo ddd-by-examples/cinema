@@ -8,10 +8,10 @@ import static io.pillopl.cinema.reservation.ReservationResult.failedReservation;
 class ReserveShowDomainService {
 
     ReservationResult reserve(Show show, SeatsCollection wantedSeats) {
-        return reserve(show, wantedSeats, new NoAdditionalRule());
+        return canReserve(show, wantedSeats, new NoAdditionalRule());
     }
 
-    ReservationResult reserve(Show show, SeatsCollection wantedSeats, ShowReservationRule additionalRule) {
+    ReservationResult canReserve(Show show, SeatsCollection wantedSeats, ShowReservationRule additionalRule) {
         if (!show.areThoseSeatsAvailable(wantedSeats)) {
             return failedReservation();
         }
