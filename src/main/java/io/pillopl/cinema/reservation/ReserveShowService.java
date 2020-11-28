@@ -9,10 +9,10 @@ import org.jooq.exception.DataChangedException;
 import static io.pillopl.cinema.reservation.ReservationResult.failedReservation;
 import static io.pillopl.cinema.reservation.ReservationResult.successfulReservation;
 
-//TODO AVAILABILITY
 //TODO jooq generation in multiple files
-//TODO onTheLEft onTheRight - move to HallAvalability albo do Show (i wtedy polityki dzialaj na Show)
+//TODO onTheLEft onTheRight - Show niech sprawdza czy istnieja
 //TODO hall managmenet
+//TODO AVAILABILITY - generalizacja? przeniesienie modelu Seat (db) tam?
 
 class ReserveShowService {
 

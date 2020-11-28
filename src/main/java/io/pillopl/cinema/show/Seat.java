@@ -12,11 +12,11 @@ public class Seat {
         this.number = number;
     }
 
-    public Seat onTheLeft() {
+    Seat onTheLeft() {
         return new Seat(row, number - 1);
     }
 
-    public Seat onTheRight() {
+    Seat onTheRight() {
         return new Seat(row, number + 1);
     }
 

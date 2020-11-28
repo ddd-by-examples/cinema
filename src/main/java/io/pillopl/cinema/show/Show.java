@@ -24,5 +24,29 @@ public class Show {
     public boolean isSeatAvailable(Seat seat) {
         return hallAvailability.isSeatAvailable(seat.row, seat.number);
     }
+
+    public boolean isSeatToTheLeftAvailable(Seat seat) {
+        return isSeatAvailable(seat.onTheLeft());
+    }
+
+    public boolean isSeatToTheRightAvailable(Seat seat) {
+        return isSeatAvailable(seat.onTheRight());
+    }
+
+    public boolean isSeatTwoToTheLeftAvailable(Seat seat) {
+        return isSeatAvailable(seat.onTheLeft().onTheLeft());
+    }
+
+    public boolean isSeatTwoToTheRightAvailable(Seat seat) {
+        return isSeatAvailable(seat.onTheRight().onTheRight());
+    }
+
+    public Seat toTheLeft(Seat fromSeat) {
+        return fromSeat.onTheLeft();
+    }
+
+    public Seat toTheRight(Seat fromSeat) {
+        return fromSeat.onTheRight();
+    }
 }
 

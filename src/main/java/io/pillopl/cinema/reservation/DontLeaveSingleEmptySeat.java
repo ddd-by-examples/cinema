@@ -28,11 +28,9 @@ class DontLeaveSingleEmptySeat implements ShowReservationRule {
 class NoSingleEmptySeatOnTheLeft implements ShowReservationRule {
 
     @Override
-    public ReservationResult checkReservation(Show show, Seat seat) {
-        Seat oneToTheLeft = seat.onTheLeft();
-        Seat twoToTheLeft = oneToTheLeft.onTheLeft();
-        if (show.isSeatAvailable(oneToTheLeft) && !show.isSeatAvailable(twoToTheLeft)) {
-            return reservationCanBePossibleWith(oneToTheLeft);
+    public ReservationResult checkReservation(Show show, Seat fromSeat) {
+        if (show.isSeatToTheLeftAvailable(fromSeat) && !show.isSeatTwoToTheLeftAvailable(fromSeat)) {
+            return reservationCanBePossibleWith(show.toTheLeft(fromSeat));
         }
         return successfulReservation();
     }
@@ -41,11 +39,9 @@ class NoSingleEmptySeatOnTheLeft implements ShowReservationRule {
 class NoSingleEmptySeatOnTheRight implements ShowReservationRule {
 
     @Override
-    public ReservationResult checkReservation(Show show, Seat seat) {
-        Seat oneToTheRight = seat.onTheRight();
-        Seat twoToTheRight = oneToTheRight.onTheRight();
-        if (show.isSeatAvailable(oneToTheRight) && !show.isSeatAvailable(twoToTheRight)) {
-            return reservationCanBePossibleWith(oneToTheRight);
+    public ReservationResult checkReservation(Show show, Seat fromSeat) {
+        if (show.isSeatToTheRightAvailable(fromSeat) && !show.isSeatTwoToTheRightAvailable(fromSeat)) {
+            return reservationCanBePossibleWith(show.toTheRight(fromSeat));
         }
         return successfulReservation();
     }
