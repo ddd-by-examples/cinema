@@ -11,6 +11,6 @@ class ReservationConfiguration {
 
     @Bean
     ReserveShowService reserveShowService(Shows shows) throws SQLException {
-        return new ReserveShowService(shows);
+        return new ReserveShowService(shows, new ReserveShowDomainService());
     }
 }

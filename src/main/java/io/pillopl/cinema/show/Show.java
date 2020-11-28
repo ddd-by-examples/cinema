@@ -48,5 +48,12 @@ public class Show {
     public Seat toTheRight(Seat fromSeat) {
         return fromSeat.onTheRight();
     }
+
+    public boolean areThoseSearsAvailable(SeatsCollection wantedSeats) {
+        return wantedSeats
+                .all()
+                .stream()
+                .allMatch(this::isSeatAvailable);
+    }
 }
 

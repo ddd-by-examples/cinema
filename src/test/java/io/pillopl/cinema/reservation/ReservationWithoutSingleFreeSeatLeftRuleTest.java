@@ -67,7 +67,7 @@ class ReservationWithoutSingleFreeSeatLeftRuleTest {
     }
 
     ReservationResult reservationFor(Show show, String... seats) {
-        return new ShowReservationBuilder().forShow(show).seats(SeatsCollection.seats(seats)).rule(new DontLeaveSingleEmptySeat()).reserve();
+        return new ReserveShowDomainService().reserve(show, SeatsCollection.seats(seats), new DontLeaveSingleEmptySeat());
 
     }
 

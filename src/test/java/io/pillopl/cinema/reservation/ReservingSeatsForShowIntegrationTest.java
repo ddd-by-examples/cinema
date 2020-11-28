@@ -19,16 +19,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 public class ReservingSeatsForShowIntegrationTest {
 
-    ReserveShowService reserveShowService;
-
     @Autowired
     Shows shows;
 
-    @BeforeEach
-    public void setup() throws SQLException {
-        reserveShowService = new ReserveShowService(shows);
-    }
-
+    @Autowired
+    ReserveShowService reserveShowService;
 
     @Test
     void shouldReserveAllSeatsWhenAllAvailable() {

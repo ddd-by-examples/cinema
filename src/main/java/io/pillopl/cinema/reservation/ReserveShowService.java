@@ -17,9 +17,11 @@ import static io.pillopl.cinema.reservation.ReservationResult.successfulReservat
 class ReserveShowService {
 
     private final Shows shows;
+    private final ReserveShowDomainService reserveShowDomainService;
 
-    ReserveShowService(Shows shows) {
+    ReserveShowService(Shows shows, ReserveShowDomainService reserveShowDomainService) {
         this.shows = shows;
+        this.reserveShowDomainService = reserveShowDomainService;
     }
 
     ReservationResult reserve(int showId, SeatsCollection seats) {
@@ -28,11 +30,7 @@ class ReserveShowService {
 
     ReservationResult reserve(int showId, SeatsCollection seats, ShowReservationRule additionalRule) {
         Show show = shows.load(showId);
-        ReservationResult result = new ShowReservationBuilder()
-                .forShow(show)
-                .seats(seats)
-                .rule(additionalRule)
-                .reserve();
+        ReservationResult result = reserveShowDomainService.reserve(show, seats, additionalRule);
         if (result.isSuccessful()) {
             return checkIfAllSeatsStillAvailableAndMarkAsUnavailable(showId, seats);
         }

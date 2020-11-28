@@ -43,7 +43,7 @@ class ReservationWithoutAdditionalRulesTest {
     }
 
     ReservationResult reservationFor(Show show, String ... seats) {
-        return new ShowReservationBuilder().forShow(show).seats(SeatsCollection.seats(seats)).reserve();
+        return new ReserveShowDomainService().reserve(show, SeatsCollection.seats(seats));
     }
 
 

@@ -29,7 +29,7 @@ class ReservationWithSpecificRequiredSeatTest {
     }
 
     ReservationResult reservationFor(Show show, String seats) {
-        return new ShowReservationBuilder().forShow(show).seats(SeatsCollection.seats(seats)).rule(WITH_REQUIRED_A2_RULE).reserve();
+        return new ReserveShowDomainService().reserve(show, SeatsCollection.seats(seats), WITH_REQUIRED_A2_RULE);
     }
 
 
