@@ -63,6 +63,86 @@ class HallAvailabilityCheckingTest {
         assertThat(availability.isSeatAvailable('C', -1000000)).isFalse();
     }
 
+    @Test
+    void shouldInformAboutSingleSeatAvailableBetweenTwoUnavailable() {
+        //expect
+        assertThat(availability.singleAvailabilityToTheLeftFrom('A', 3)).hasValue(2);
+        assertThat(availability.singleAvailabilityToTheRightFrom('A', 7)).hasValue(8);
+        assertThat(availability.singleAvailabilityToTheLeftFrom('B', 2)).hasValue(1);
+        assertThat(availability.singleAvailabilityToTheRightFrom('D', 5)).hasValue(6);
+        assertThat(availability.singleAvailabilityToTheLeftFrom('D', 6)).hasValue(5);
+        assertThat(availability.singleAvailabilityToTheRightFrom('B', 7)).hasValue(8);
+
+    }
+
+    @Test
+    void shouldNotInformAboutSingleSeatAvailableBetweenTwoUnavailable() {
+        //expect
+        assertThat(availability.singleAvailabilityToTheLeftFrom('A', 1)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheLeftFrom('A', 2)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheLeftFrom('A', 4)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheLeftFrom('A', 5)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheLeftFrom('A', 6)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheLeftFrom('A', 7)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheLeftFrom('A', 8)).isEmpty();
+
+        assertThat(availability.singleAvailabilityToTheRightFrom('A', 1)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheRightFrom('A', 2)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheRightFrom('A', 4)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheRightFrom('A', 5)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheRightFrom('A', 6)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheRightFrom('A', 8)).isEmpty();
+
+        assertThat(availability.singleAvailabilityToTheLeftFrom('B', 1)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheLeftFrom('B', 3)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheLeftFrom('B', 4)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheLeftFrom('B', 5)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheLeftFrom('B', 6)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheLeftFrom('B', 7)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheLeftFrom('B', 8)).isEmpty();
+
+        assertThat(availability.singleAvailabilityToTheRightFrom('B', 1)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheRightFrom('B', 2)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheRightFrom('B', 3)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheRightFrom('B', 4)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheRightFrom('B', 5)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheRightFrom('B', 6)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheRightFrom('B', 8)).isEmpty();
+
+        assertThat(availability.singleAvailabilityToTheLeftFrom('C', 1)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheLeftFrom('C', 2)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheLeftFrom('C', 3)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheLeftFrom('C', 4)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheLeftFrom('C', 5)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheLeftFrom('C', 6)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheLeftFrom('C', 7)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheLeftFrom('C', 8)).isEmpty();
+
+        assertThat(availability.singleAvailabilityToTheLeftFrom('D', 1)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheLeftFrom('D', 2)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheLeftFrom('D', 3)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheLeftFrom('D', 4)).isEmpty();
+
+        assertThat(availability.singleAvailabilityToTheLeftFrom('D', 7)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheLeftFrom('D', 8)).isEmpty();
+
+        assertThat(availability.singleAvailabilityToTheRightFrom('C', 1)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheRightFrom('C', 2)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheRightFrom('C', 3)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheRightFrom('C', 4)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheRightFrom('C', 5)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheRightFrom('C', 6)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheRightFrom('C', 7)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheRightFrom('C', 8)).isEmpty();
+
+        assertThat(availability.singleAvailabilityToTheRightFrom('D', 1)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheRightFrom('D', 2)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheRightFrom('D', 3)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheRightFrom('D', 4)).isEmpty();
+
+        assertThat(availability.singleAvailabilityToTheRightFrom('D', 7)).isEmpty();
+        assertThat(availability.singleAvailabilityToTheRightFrom('D', 8)).isEmpty();
+    }
 
 
 }

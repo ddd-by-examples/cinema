@@ -1,7 +1,6 @@
 package io.pillopl.cinema.availability;
 
 
-
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -23,6 +22,22 @@ public class HallAvailability {
             return false;
         }
         return seats.get(row).hasAvailabilityAt(seatNumber);
+    }
+
+    public Optional<Integer> singleAvailabilityToTheLeftFrom(Character row, int seatNumber) {
+        int nextSeatToTheLeft = seatNumber - 1;
+        if (isSeatAvailable(row, nextSeatToTheLeft) && !isSeatAvailable(row, nextSeatToTheLeft - 1)) {
+            return Optional.of(nextSeatToTheLeft);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<Integer> singleAvailabilityToTheRightFrom(Character row, int seatNumber) {
+        int nextSeatToTheRight = seatNumber + 1;
+        if (isSeatAvailable(row, nextSeatToTheRight) && !isSeatAvailable(row, nextSeatToTheRight + 1)) {
+            return Optional.of(nextSeatToTheRight);
+        }
+        return Optional.empty();
     }
 
     private boolean rowDoesNotExists(Character row) {

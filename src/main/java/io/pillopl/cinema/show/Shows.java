@@ -14,8 +14,8 @@ public class Shows {
         this.showRepository = showRepository;
     }
 
-    public Show create(int showId, Map<Character, String> seatsAvailability) {
-        return showRepository.createShow(showId, new HallAvailability(seatsAvailability));
+    public Show create(int showId, Map<Character, String> hall) {
+        return showRepository.createShow(showId, new HallAvailability(hall));
     }
 
     public Show load(int showId) {

@@ -12,14 +12,6 @@ public class Seat {
         this.number = number;
     }
 
-    Seat onTheLeft() {
-        return new Seat(row, number - 1);
-    }
-
-    Seat onTheRight() {
-        return new Seat(row, number + 1);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

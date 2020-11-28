@@ -2,12 +2,10 @@ package io.pillopl.cinema.reservation;
 
 import io.pillopl.cinema.show.Seat;
 import io.pillopl.cinema.show.Shows;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.sql.SQLException;
 import java.util.Map;
 import java.util.Random;
 

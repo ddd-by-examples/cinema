@@ -4,6 +4,7 @@ import io.pillopl.cinema.availability.HallAvailability;
 
 
 import java.util.Map;
+import java.util.Optional;
 
 public class Show {
 
@@ -25,31 +26,19 @@ public class Show {
         return hallAvailability.isSeatAvailable(seat.row, seat.number);
     }
 
-    public boolean isSeatToTheLeftAvailable(Seat seat) {
-        return isSeatAvailable(seat.onTheLeft());
+    public Optional<Seat> singleSeatFreeToTheLeftFrom(Seat seat) {
+        return hallAvailability
+                .singleAvailabilityToTheRightFrom(seat.row, seat.number)
+                .map(number -> new Seat(seat.row, number));
     }
 
-    public boolean isSeatToTheRightAvailable(Seat seat) {
-        return isSeatAvailable(seat.onTheRight());
+    public Optional<Seat> singleSeatFreeToTheRightFrom(Seat seat) {
+        return hallAvailability
+                .singleAvailabilityToTheLeftFrom(seat.row, seat.number)
+                .map(number -> new Seat(seat.row, number));
     }
 
-    public boolean isSeatTwoToTheLeftAvailable(Seat seat) {
-        return isSeatAvailable(seat.onTheLeft().onTheLeft());
-    }
-
-    public boolean isSeatTwoToTheRightAvailable(Seat seat) {
-        return isSeatAvailable(seat.onTheRight().onTheRight());
-    }
-
-    public Seat toTheLeft(Seat fromSeat) {
-        return fromSeat.onTheLeft();
-    }
-
-    public Seat toTheRight(Seat fromSeat) {
-        return fromSeat.onTheRight();
-    }
-
-    public boolean areThoseSearsAvailable(SeatsCollection wantedSeats) {
+    public boolean areThoseSeatsAvailable(SeatsCollection wantedSeats) {
         return wantedSeats
                 .all()
                 .stream()

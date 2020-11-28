@@ -12,7 +12,7 @@ class ReserveShowDomainService {
     }
 
     ReservationResult reserve(Show show, SeatsCollection wantedSeats, ShowReservationRule additionalRule) {
-        if (!show.areThoseSearsAvailable(wantedSeats)) {
+        if (!show.areThoseSeatsAvailable(wantedSeats)) {
             return failedReservation();
         }
         return additionalRule.checkReservation(show, wantedSeats);
