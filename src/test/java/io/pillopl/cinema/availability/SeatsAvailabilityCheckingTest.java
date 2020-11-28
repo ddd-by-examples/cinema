@@ -5,13 +5,14 @@ import org.junit.jupiter.api.Test;
 import static java.util.Map.of;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class HallAvailabilityCheckingTest {
+class SeatsAvailabilityCheckingTest {
 
-    static Hall availability = new Hall(of(
+    static SeatsAvailability availability = new SeatsAvailability(of(
             'A', "X-------",
             'B', "--------",
             'C', "XXXXXXXX",
             'D', "XXXX--XX"));
+
 
     @Test
     void shouldUnderstandTheAvailabilityOfSeats() {

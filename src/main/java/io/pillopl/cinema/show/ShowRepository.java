@@ -1,6 +1,6 @@
 package io.pillopl.cinema.show;
 
-import io.pillopl.cinema.availability.Hall;
+import io.pillopl.cinema.availability.SeatsAvailability;
 import io.pillopl.cinema.database.tables.records.ShowSeatRecord;
 import org.jooq.DSLContext;
 import org.jooq.Field;
@@ -30,11 +30,11 @@ class ShowRepository {
                 new Settings().withExecuteWithOptimisticLocking(true));
     }
 
-    Show createShow(int showId, Hall hall) {
-        hall
+    Show createShow(int showId, SeatsAvailability seatsAvailability) {
+        seatsAvailability
                 .print()
                 .forEach((row, seats) -> insertRow(showId, valueOf(row), seats));
-        return new Show(hall);
+        return new Show(seatsAvailability);
     }
 
     Show load(int showId) {
@@ -46,14 +46,6 @@ class ShowRepository {
                         .fetch()
                         .intoGroups(SHOW_SEAT.SEAT_ROW);
         return reconstructShow(stringResultMap);
-    }
-
-    private Show reconstructShow(Map<String, Result<ShowSeatRecord>> seats) {
-        Map<Character, String> availability = seats
-                .entrySet()
-                .stream()
-                .collect(toMap(e -> e.getKey().charAt(0), e -> e.getValue().stream().map(ShowSeatRecord::getAvailability).collect(joining())));
-        return new Show(availability);
     }
 
     void optimisticallyLockingMarkAllSeatsAsUnavailable(int showId, SeatsCollection toReserve) {
@@ -70,6 +62,14 @@ class ShowRepository {
             };
         });
 
+    }
+
+    private Show reconstructShow(Map<String, Result<ShowSeatRecord>> seats) {
+        Map<Character, String> availability = seats
+                .entrySet()
+                .stream()
+                .collect(toMap(e -> e.getKey().charAt(0), e -> e.getValue().stream().map(ShowSeatRecord::getAvailability).collect(joining())));
+        return new Show(availability);
     }
 
 

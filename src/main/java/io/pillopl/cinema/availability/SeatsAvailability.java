@@ -6,11 +6,11 @@ import java.util.Map.Entry;
 
 import static java.util.stream.Collectors.toMap;
 
-public class Hall {
+public class SeatsAvailability {
 
     private final Map<Character, Row> seats;
 
-    public Hall(Map<Character, String> availability) {
+    public SeatsAvailability(Map<Character, String> availability) {
         this.seats = availability
                 .entrySet()
                 .stream()
@@ -48,7 +48,6 @@ public class Hall {
     private boolean rowDoesNotExists(Character row) {
         return !seats.containsKey(row);
     }
-
 
 }
 

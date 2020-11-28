@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class HallAvailabilityPrintingTest {
+class SeatsAvailabilityPrintingTest {
 
     @Test
     void shouldPrintSeatsAvailabilityInHallWithNoSeats() {
@@ -17,7 +17,7 @@ class HallAvailabilityPrintingTest {
         Map<Character, String> NO_SEATS = of();
 
         //expect
-        assertEquals(NO_SEATS, new Hall(NO_SEATS).print());
+        assertEquals(NO_SEATS, new SeatsAvailability(NO_SEATS).print());
     }
 
     @Test
@@ -29,7 +29,7 @@ class HallAvailabilityPrintingTest {
                 'C', "XXXXXXXX",
                 'D', "XXXXXXXX");
         //expect
-        assertEquals(NONE_AVAILABLE, new Hall(NONE_AVAILABLE).print());
+        assertEquals(NONE_AVAILABLE, new SeatsAvailability(NONE_AVAILABLE).print());
     }
 
     @Test
@@ -41,7 +41,7 @@ class HallAvailabilityPrintingTest {
                 'C', "--------",
                 'D', "--------");
         //expect
-        assertEquals(ALL_AVAILABLE, new Hall(ALL_AVAILABLE).print());
+        assertEquals(ALL_AVAILABLE, new SeatsAvailability(ALL_AVAILABLE).print());
     }
 
     @Test
@@ -53,13 +53,13 @@ class HallAvailabilityPrintingTest {
                 'C', "XXXXXXXX",
                 'D', "XXXX--XX");
         //expect
-        assertEquals(PARTIALLY_UNAVAILABLE, new Hall(PARTIALLY_UNAVAILABLE).print());
+        assertEquals(PARTIALLY_UNAVAILABLE, new SeatsAvailability(PARTIALLY_UNAVAILABLE).print());
     }
 
     @Test
     void cannotCreateAvailabilityWhenInputIsNotUnderstood() {
         assertThatExceptionOfType(IllegalStateException.class)
-                .isThrownBy(() -> new Hall(of('A', "X-----xyzsda")));
+                .isThrownBy(() -> new SeatsAvailability(of('A', "X-----xyzsda")));
     }
 
 

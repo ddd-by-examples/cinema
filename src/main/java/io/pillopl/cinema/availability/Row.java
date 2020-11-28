@@ -3,6 +3,7 @@ package io.pillopl.cinema.availability;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.toList;
 
@@ -13,12 +14,14 @@ class Row {
 
     static Row of(String seats) {
         return new Row(seats
+                .strip()
                 .chars()
-                .mapToObj(character -> seatOf((char) character))
+                .mapToObj(character -> (char) character)
+                .map(Row::createSeat)
                 .collect(toList()));
     }
 
-    static Seat seatOf(Character marker) {
+    static Seat createSeat(Character marker) {
         if (marker.equals(SEAT_NOT_AVAILABLE)) {
             return new Seat(false);
         }
