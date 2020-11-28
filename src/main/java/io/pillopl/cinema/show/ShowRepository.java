@@ -1,6 +1,6 @@
 package io.pillopl.cinema.show;
 
-import io.pillopl.cinema.availability.HallAvailability;
+import io.pillopl.cinema.availability.Hall;
 import io.pillopl.cinema.database.tables.records.ShowSeatRecord;
 import org.jooq.DSLContext;
 import org.jooq.Field;
@@ -30,11 +30,11 @@ class ShowRepository {
                 new Settings().withExecuteWithOptimisticLocking(true));
     }
 
-    Show createShow(int showId, HallAvailability hallAvailability) {
-        hallAvailability
+    Show createShow(int showId, Hall hall) {
+        hall
                 .print()
                 .forEach((row, seats) -> insertRow(showId, valueOf(row), seats));
-        return new Show(hallAvailability);
+        return new Show(hall);
     }
 
     Show load(int showId) {

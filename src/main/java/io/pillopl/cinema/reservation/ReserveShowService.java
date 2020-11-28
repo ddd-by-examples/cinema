@@ -9,10 +9,6 @@ import org.jooq.exception.DataChangedException;
 import static io.pillopl.cinema.reservation.ReservationResult.failedReservation;
 import static io.pillopl.cinema.reservation.ReservationResult.successfulReservation;
 
-//TODO jooq generation in multiple files
-//TODO hall managmenet
-//TODO AVAILABILITY - generalizacja? przeniesienie modelu Seat (db) tam?
-
 class ReserveShowService {
 
     private final Shows shows;

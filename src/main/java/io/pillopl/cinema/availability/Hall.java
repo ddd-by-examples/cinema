@@ -6,11 +6,11 @@ import java.util.Map.Entry;
 
 import static java.util.stream.Collectors.toMap;
 
-public class HallAvailability {
+public class Hall {
 
     private final Map<Character, Row> seats;
 
-    public HallAvailability(Map<Character, String> availability) {
+    public Hall(Map<Character, String> availability) {
         this.seats = availability
                 .entrySet()
                 .stream()
@@ -25,17 +25,15 @@ public class HallAvailability {
     }
 
     public Optional<Integer> singleAvailabilityToTheLeftFrom(Character row, int seatNumber) {
-        int nextSeatToTheLeft = seatNumber - 1;
-        if (isSeatAvailable(row, nextSeatToTheLeft) && !isSeatAvailable(row, nextSeatToTheLeft - 1)) {
-            return Optional.of(nextSeatToTheLeft);
+        if (isSeatAvailable(row, seatNumber - 1) && !isSeatAvailable(row, seatNumber - 1 - 1)) {
+            return Optional.of(seatNumber - 1);
         }
         return Optional.empty();
     }
 
     public Optional<Integer> singleAvailabilityToTheRightFrom(Character row, int seatNumber) {
-        int nextSeatToTheRight = seatNumber + 1;
-        if (isSeatAvailable(row, nextSeatToTheRight) && !isSeatAvailable(row, nextSeatToTheRight + 1)) {
-            return Optional.of(nextSeatToTheRight);
+        if (isSeatAvailable(row, seatNumber + 1) && !isSeatAvailable(row, seatNumber + 1 + 1)) {
+            return Optional.of(seatNumber + 1);
         }
         return Optional.empty();
     }

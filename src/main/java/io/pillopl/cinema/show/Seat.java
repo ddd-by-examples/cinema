@@ -2,6 +2,7 @@ package io.pillopl.cinema.show;
 
 import java.util.Objects;
 
+//TODO AVAILABILITY - generalizacja? przeniesienie modelu bazodanowego Seat tam?
 public class Seat {
 
     final Character row;

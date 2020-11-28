@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class HallAvailabilityCheckingTest {
 
-    static HallAvailability availability = new HallAvailability(of(
+    static Hall availability = new Hall(of(
             'A', "X-------",
             'B', "--------",
             'C', "XXXXXXXX",

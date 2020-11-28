@@ -1,6 +1,6 @@
 package io.pillopl.cinema.show;
 
-import io.pillopl.cinema.availability.HallAvailability;
+import io.pillopl.cinema.availability.Hall;
 import org.jooq.exception.DataChangedException;
 
 import java.util.Map;
@@ -15,7 +15,7 @@ public class Shows {
     }
 
     public Show create(int showId, Map<Character, String> hall) {
-        return showRepository.createShow(showId, new HallAvailability(hall));
+        return showRepository.createShow(showId, new Hall(hall));
     }
 
     public Show load(int showId) {
