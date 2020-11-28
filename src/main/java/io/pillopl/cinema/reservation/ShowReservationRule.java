@@ -12,18 +12,17 @@ import static io.pillopl.cinema.reservation.ReservationResult.reservationCanBePo
 
 interface ShowReservationRule {
 
-    ReservationResult checkReservation(Show show, Seat seat);
+    ReservationResult checkSeat(Show show, Seat seat);
 
-    default ReservationResult checkReservation(Show availability, SeatsCollection wantedSeats) {
+    default ReservationResult checkSeats(Show availability, SeatsCollection wantedSeats) {
         Set<Seat> additionalSeats = wantedSeats
                 .all()
                 .stream()
-                .map(seat -> checkReservation(availability, seat))
+                .map(seat -> checkSeat(availability, seat))
                 .map(ReservationResult::getSeatsRequiredToReserve)
                 .flatMap(Collection::stream)
                 .filter(seatRequest -> !wantedSeats.contains(seatRequest))
                 .collect(Collectors.toSet());
-
         return reservationCanBePossibleWith(additionalSeats);
     }
 

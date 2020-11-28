@@ -38,15 +38,15 @@ public class Hall {
         return Optional.empty();
     }
 
-    private boolean rowDoesNotExists(Character row) {
-        return !seats.containsKey(row);
-    }
-
     public Map<Character, String> print() {
         return seats
                 .entrySet()
                 .stream()
                 .collect(toMap(Entry::getKey, entry -> entry.getValue().print()));
+    }
+
+    private boolean rowDoesNotExists(Character row) {
+        return !seats.containsKey(row);
     }
 
 

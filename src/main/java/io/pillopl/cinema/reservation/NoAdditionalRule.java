@@ -8,7 +8,7 @@ import static io.pillopl.cinema.reservation.ReservationResult.successfulReservat
 class NoAdditionalRule implements ShowReservationRule {
 
     @Override
-    public ReservationResult checkReservation(Show show, Seat seat) {
+    public ReservationResult checkSeat(Show show, Seat seat) {
         return successfulReservation();
     }
 }

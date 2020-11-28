@@ -17,7 +17,7 @@ class ArtificialRuleWithRequiredSpecificSeat implements ShowReservationRule {
     }
 
     @Override
-    public ReservationResult checkReservation(Show availability, Seat seat) {
+    public ReservationResult checkSeat(Show availability, Seat seat) {
         if (seat.equals(requiredSeat)) {
             return successfulReservation();
         }

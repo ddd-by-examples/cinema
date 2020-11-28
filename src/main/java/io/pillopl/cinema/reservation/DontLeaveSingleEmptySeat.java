@@ -13,7 +13,7 @@ import static java.util.stream.Collectors.*;
 class DontLeaveSingleEmptySeat implements ShowReservationRule {
 
     @Override
-    public ReservationResult checkReservation(Show show, Seat requestedSeat) {
+    public ReservationResult checkSeat(Show show, Seat requestedSeat) {
         Set<Seat> additionalNeededSeats =
                 List.of(show.singleSeatFreeToTheLeftFrom(requestedSeat), show.singleSeatFreeToTheRightFrom(requestedSeat))
                 .stream()
